@@ -1,6 +1,6 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/scoped_array.hpp>
-#include <memory> // could be <boost/shared_ptr.hpp>
+#include <memory> // It's in C++11 but it also could be from <boost/shared_ptr.hpp>
 #include <boost/shared_array.hpp>
 #include <boost/weak_ptr.hpp>
 #include <boost/intrusive_ptr.hpp>
@@ -62,7 +62,24 @@ namespace Example
 
   void shared_ptr()
   {
-    //TODO
+    std::cout << "Example of std::shared_ptr :" << std::endl;
+
+    std::vector<std::shared_ptr<int> > v;
+    v.push_back(std::shared_ptr<int>(new int(123)));
+    v.push_back(std::shared_ptr<int>(new int(456)));
+    std::cout << "1. " << *v[0] << "," << *v[1] << std::endl;
+    // 1. 123,456
+
+    std::shared_ptr<int> a(new int(111));
+    std::shared_ptr<int> b(a);
+    std::cout << "2. " << *a << "," << *b << std::endl;
+    // 2. 111,111
+
+    a.reset(new int(222));
+    std::cout << "3. " << *a << "," << *b << std::endl;
+    // 3. 222,111
+
+    std::cout << std::endl;
   }
 
   void shared_array()
@@ -102,6 +119,6 @@ int main()
 
   std::cout << "Now you can check memory leaks:" << std::endl;
   std::cout << "valgrind --tool=memcheck ./main" << std::endl;
-  std::cout << "There shouldn't be any. :)" << std::endl;
+  std::cout << "Everything is correct if there are exactly as many allocs as frees." << std::endl;
 }
 
