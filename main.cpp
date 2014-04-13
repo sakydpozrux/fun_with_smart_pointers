@@ -1,5 +1,10 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/scoped_array.hpp>
+#include <memory> // could be <boost/shared_ptr.hpp>
+#include <boost/shared_array.hpp>
+#include <boost/weak_ptr.hpp>
+#include <boost/intrusive_ptr.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 
 #include <iostream>
 
@@ -54,6 +59,26 @@ namespace Example
 
     std::cout << std::endl;
   }
+
+  void shared_ptr()
+  {
+    //TODO
+  }
+
+  void shared_array()
+  {
+    //TODO
+  }
+
+  void intrusive_ptr()
+  {
+    //TODO
+  }
+
+  void ptr_vector()
+  {
+    //TODO
+  }
 }
 
 int main()
@@ -64,6 +89,16 @@ int main()
   Example::scoped_ptr();
 
   Example::scoped_array();
+
+  Example::shared_ptr();
+
+  //Example::shared_array();
+
+  //Example::weak_ptr();
+
+  //Example::intrusive_ptr();
+
+  //Example::ptr_vector();
 
   std::cout << "Now you can check memory leaks:" << std::endl;
   std::cout << "valgrind --tool=memcheck ./main" << std::endl;
