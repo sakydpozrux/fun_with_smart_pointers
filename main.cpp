@@ -66,7 +66,7 @@ int main()
   Example::scoped_array();
 
   std::cout << "Now you can check memory leaks:" << std::endl;
-  std::cout << "valgrind --tool=memcheck --quiet ./main" << std::endl;
+  std::cout << "valgrind --tool=memcheck ./main" << std::endl;
   std::cout << "There shouldn't be any. :)" << std::endl;
 }
 
