@@ -1,11 +1,13 @@
+CXX = g++
+CXXFLAGS = -g -Wall -O2 -std=c++11
 
 make: main
 
 main: main.o
-	g++ -g -Wall -O2 -std=c++11 main.o -o main
+	$(CXX) $(CXXFLAGS) main.o -o main
 
 main.o: main.cpp
-	g++ -g -Wall -O2 -std=c++11 main.cpp -c
+	$(CXX) $(CXXFLAGS) main.cpp -c
 
 clean:
 	rm -f *.o main
