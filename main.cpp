@@ -84,7 +84,23 @@ namespace Example
 
   void shared_array()
   {
-    //TODO
+    std::cout << "Example of std::shared_array :" << std::endl;
+
+    boost::shared_array<int> a(new int[2] {111, 222});
+    std::cout << "1. " << a[0] << "," << a[1] << std::endl;
+    // 1. 111,222
+
+    boost::shared_array<int> b(a);
+    std::cout << "2. " << b[0] << "," << b[1] << std::endl;
+    // 2. 111,222
+    
+    b[0] = 999;
+    std::cout << "3. a contains: " << a[0] << "," << a[1] << std::endl;
+    std::cout << "   b contains: " << b[0] << "," << b[1] << std::endl;
+    // 3. 111,222
+    //    999,222
+
+    std::cout << std::endl;
   }
 
   void intrusive_ptr()
@@ -109,7 +125,7 @@ int main()
 
   Example::shared_ptr();
 
-  //Example::shared_array();
+  Example::shared_array();
 
   //Example::weak_ptr();
 
