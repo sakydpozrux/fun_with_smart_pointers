@@ -1,10 +1,12 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/scoped_array.hpp>
-#include <memory> // It's in C++11 but it also could be from <boost/shared_ptr.hpp>
+// #include <boost/shared_ptr.hpp> // It's in <memory> since C++11 as std::shared_ptr
 #include <boost/shared_array.hpp>
-#include <boost/weak_ptr.hpp>
+//#include <boost/weak_ptr.hpp> // It's in <memory> since C++11 as std::weak_ptr
 #include <boost/intrusive_ptr.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
+
+#include <memory>
 
 #include <iostream>
 
@@ -84,7 +86,7 @@ namespace Example
 
   void shared_array()
   {
-    std::cout << "Example of std::shared_array :" << std::endl;
+    std::cout << "Example of boost::shared_array :" << std::endl;
 
     boost::shared_array<int> a(new int[2] {111, 222});
     std::cout << "1. " << a[0] << "," << a[1] << std::endl;
@@ -99,6 +101,45 @@ namespace Example
     std::cout << "   b contains: " << b[0] << "," << b[1] << std::endl;
     // 3. 111,222
     //    999,222
+
+    std::cout << std::endl;
+  }
+
+  void weak_ptr()
+  {
+    std::cout << "Example of std::weak_ptr :" << std::endl;
+    std::cout << "It's used to break circular references of shared_ptr." << std::endl;
+
+
+    std::shared_ptr<int> a(new int(111));
+    std::weak_ptr<int> weak(a);
+
+    if (auto weak_lock = weak.lock())
+    {
+      std::cout << "1. reference still extists so I can use weak_lock pointer" << std::endl;
+      std::cout << "   " << *a << "," << *weak_lock << std::endl;
+      // 111,111
+    }
+    else
+    {
+      std::cout << "1. reference doesn't exist so I can't use weak_lock pointer" << std::endl;
+    }
+
+
+    std::weak_ptr<int> weak2(a);
+    a.reset(new int(222)); // <-- This one line is critical for weak_ptr understanding ;)
+
+    if (auto weak2_lock = weak2.lock())
+    {
+      std::cout << "2. reference still extists so I can use weak2_lock pointer" << std::endl;
+    }
+    else
+    {
+      std::cout << "2. reference doesn't exist so I can't use weak2_lock pointer" << std::endl;
+      std::cout << "   " << *a << std::endl;
+      // 222
+    }
+
 
     std::cout << std::endl;
   }
@@ -127,7 +168,7 @@ int main()
 
   Example::shared_array();
 
-  //Example::weak_ptr();
+  Example::weak_ptr();
 
   //Example::intrusive_ptr();
 
